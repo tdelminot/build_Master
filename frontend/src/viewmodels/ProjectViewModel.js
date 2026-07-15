@@ -1,4 +1,5 @@
-﻿import { makeAutoObservable, runInAction } from 'mobx';
+﻿// frontend/src/viewmodels/ProjectViewModel.js
+import { makeAutoObservable, runInAction } from 'mobx';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
@@ -20,7 +21,21 @@ class ProjectViewModel {
       const response = await axios.get(`${API_URL}/projects`);
       if (response.data.success) {
         runInAction(() => {
-          this.projects = response.data.projects;
+          // ✅ Nettoyer les données avant de les stocker
+          this.projects = response.data.projects.map(project => ({
+            id: project.id || '',
+            title: project.title || '',
+            description: project.description || '',
+            category: project.category || '',
+            location: project.location || '',
+            beforeImage: project.beforeImage || project.before_image || '',
+            afterImage: project.afterImage || project.after_image || '',
+            architectId: project.architectId || '',
+            architectName: project.architectName || '',
+            year: project.year || null,
+            status: project.status || '',
+            createdAt: project.createdAt || '',
+          }));
         });
       }
     } catch (error) {
@@ -41,7 +56,21 @@ class ProjectViewModel {
       const response = await axios.get(`${API_URL}/projects/${id}`);
       if (response.data.success) {
         runInAction(() => {
-          this.selectedProject = response.data.project;
+          const p = response.data.project;
+          this.selectedProject = {
+            id: p.id || '',
+            title: p.title || '',
+            description: p.description || '',
+            category: p.category || '',
+            location: p.location || '',
+            beforeImage: p.beforeImage || p.before_image || '',
+            afterImage: p.afterImage || p.after_image || '',
+            architectId: p.architectId || '',
+            architectName: p.architectName || '',
+            year: p.year || null,
+            status: p.status || '',
+            createdAt: p.createdAt || '',
+          };
         });
       }
     } catch (error) {

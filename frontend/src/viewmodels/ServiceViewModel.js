@@ -1,3 +1,4 @@
+// frontend/src/viewmodels/ServiceViewModel.js
 import { makeAutoObservable, runInAction } from 'mobx';
 import axios from 'axios';
 
@@ -19,7 +20,15 @@ class ServiceViewModel {
       const response = await axios.get(`${API_URL}/services`);
       if (response.data.success) {
         runInAction(() => {
-          this.services = response.data.services;
+          // ✅ Nettoyer les données
+          this.services = response.data.services.map(service => ({
+            id: service.id || '',
+            name: service.name || '',
+            description: service.description || '',
+            icon: service.icon || '',
+            category: service.category || '',
+            createdAt: service.createdAt || '',
+          }));
         });
       }
     } catch (error) {
