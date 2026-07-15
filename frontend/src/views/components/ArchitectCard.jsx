@@ -2,9 +2,8 @@
 import { motion } from 'framer-motion';
 
 const ArchitectCard = ({ architect, index, onContact }) => {
-  const imageUrl = architect.photo 
-    ? `http://localhost:5000${architect.photo}` 
-    : 'https://via.placeholder.com/300x300?text=Architecte';
+  //  Utiliser l'URL Cloudinary directement
+  const imageUrl = architect.photo || 'https://via.placeholder.com/300x300?text=Architecte';
 
   return (
     <motion.div 

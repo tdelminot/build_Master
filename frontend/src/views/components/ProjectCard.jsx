@@ -4,13 +4,9 @@ import { motion } from 'framer-motion';
 const ProjectCard = ({ project }) => {
   const [showBefore, setShowBefore] = useState(true);
 
-  const beforeImage = project.beforeImage 
-    ? `http://localhost:5000${project.beforeImage}` 
-    : 'https://via.placeholder.com/400x300?text=Avant';
-  
-  const afterImage = project.afterImage 
-    ? `http://localhost:5000${project.afterImage}` 
-    : 'https://via.placeholder.com/400x300?text=Après';
+  //  Utiliser les URLs Cloudinary directement
+  const beforeImage = project.beforeImage || 'https://via.placeholder.com/400x300?text=Avant';
+  const afterImage = project.afterImage || 'https://via.placeholder.com/400x300?text=Après';
 
   const statusLabels = {
     'completed': 'Terminé',
